@@ -21,10 +21,6 @@
 #include <stdarg.h>
 #include <string.h>
 
-// G.E.T.
-//#include <curl/curl.h>
-//#include <json-c/json.h>
-
 #ifndef _WIN32_WCE
 #ifndef CONFIG_TI_COMPILER
 #include <signal.h>

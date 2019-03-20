@@ -424,9 +424,12 @@ static void show_version(void)
 		"hostapd v" VERSION_STR "\n"
 		"User space daemon for IEEE 802.11 AP management,\n"
 		"IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator\n"
-		"Soporte OVS + Aplicacion OpenFlow - G.E.T. 11-03-2019 20:00\n"
 		"Copyright (c) 2002-2015, Jouni Malinen <j@w1.fi> "
-		"and contributors\n");
+		"and contributors\n"
+		"--------------------------------------------\n"
+		"Custom compilation by the Advanced Networks Research Group\n"
+		"Pontificia Universidad Catolica del Peru\n"
+		"OpenvSwitch patch + OpenFlow Application - GermanE.T. 19-03-2019 21:30\n");
 }
 
 

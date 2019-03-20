@@ -16,10 +16,6 @@ export BINDIR ?= /usr/local/bin/
 # directory if your C library does not include all header files.
 # CFLAGS += -DUSE_KERNEL_HEADERS -I/usr/src/linux/include
 
-# Added by G.E.T.
-#CFLAGS += -I/usr/include
-#CFLAGS += -L/usr/lib/x86_64-linux-gnu
-
 -include .config
 
 ifdef CONFIG_TESTING_OPTIONS
@@ -74,10 +70,6 @@ NEED_RC4=y
 NEED_AES=y
 NEED_MD5=y
 NEED_SHA1=y
-
-# G.E.T.
-#LIBS += -lcurl
-#LIBS += -ljson-c
 
 OBJS += ../src/drivers/drivers.o
 CFLAGS += -DHOSTAPD

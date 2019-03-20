@@ -1677,90 +1677,22 @@ ieee802_1x_receive_auth(struct radius_msg *msg, struct radius_msg *req,
 
 			hostapd_logger(hapd, sm->addr, HOSTAPD_MODULE_IEEE8021X,
 					HOSTAPD_LEVEL_DEBUG, "Identidad de usuario: '%s'", sm->identity);
-
-			/* LOGICA PARA COMUNIDADES antiguo (2017)*/
-			/*
-			char temp[25];
-						// Seteamos array con respuesta de RADIUS
-						radius_msg_get_communities(msg,temp);
-						char *imp = temp;
-
-						// Almacenar comunidades en arreglo de enteros
-						int z=0;
-						while (*imp){
-							z++;
-							imp++;
-						}
-						char tesis[z+1];
-						int x;
-						for (x=0; x<z;x++){
-							tesis[x]=temp[x];
-						}
-						tesis[z]='\0';
-
-
-
-						sta->communities = tesis;
-						hostapd_logger(hapd, sm->addr, HOSTAPD_MODULE_IEEE8021X,
-								HOSTAPD_LEVEL_DEBUG, "Las comunidades del usuario son: '%s'",
-								sta->communities);
-
-						//char *input = "10:20:30:40";
-						char *input = tesis;
-						char filtro = ':';
-						char *inicio = input;
-						char *final = input;
-
-						char *comunidades[MAX_LONGITUD] = {NULL};
-						int i=0;
-						while (final = os_strchr(inicio, (int)filtro)) {
-							int length=final-inicio;
-							int j=0;
-							char *temp = (char *) os_malloc(sizeof(char)*(length+1));
-							while (j < length) {
-								temp[j] = *inicio;
-								inicio++;
-								j++;
-							}
-							temp[j] = NULL_TERM;
-							comunidades[i]=temp;
-							i++;
-							final++;
-							inicio=final;
-						}
-						comunidades[i]=inicio;
-						int arreglo[i];
-						int k;
-						for ( k=0; k<=i;k++){
-							arreglo[k]=atoi(comunidades[k]);
-							hostapd_logger(hapd, sm->addr, HOSTAPD_MODULE_IEEE8021X,
-									HOSTAPD_LEVEL_DEBUG, "Comunidad '%d'", arreglo[k]);
-						}
-
-						hostapd_logger(hapd, sta->addr,
-										HOSTAPD_MODULE_RADIUS,
-										HOSTAPD_LEVEL_INFO,
-										"User '%s' with MAC " MACSTR " belongs to VLAN %d",
-										sta->identity,
-										MAC2STR(sta->addr),
-										sta->vlan_id); */
-
 			hostapd_logger(hapd, sm->addr, HOSTAPD_MODULE_IEEE8021X,
 					HOSTAPD_LEVEL_DEBUG, "Enviando datos a controlador PUCPLight");
 
-			/* Logic to use HTTP curl
-			 * * Thursday Nov 9th -2017 RDY TO GO
-			 * */
-
+			/*
+			 * Logic to inform the SDN controller
+			 */
+			// In the meantime just testing CURL and JSON usage
 			CURL *curl;
 			CURLcode res;
 			char *url= "http://localhost:8080/networkService/v1.1/tenants/default/networks/95";
 
 			json_object *inside = json_object_new_object();
-			// nombre de la comunidad de interes
+			// user identity
 			char *com_identity="apCurl";
 
-			// id de la comunidad de interes
+			// user mac
 			char *com_mac="95";
 
 			json_object *c_identity = json_object_new_string(com_identity);
@@ -1808,7 +1740,7 @@ ieee802_1x_receive_auth(struct radius_msg *msg, struct radius_msg *req,
 			    // Check for errors
 			    if(res != CURLE_OK)
 			    	hostapd_logger(hapd, sm->addr, HOSTAPD_MODULE_IEEE8021X,
-			    						HOSTAPD_LEVEL_DEBUG, "Curl found errors - German");
+			    						HOSTAPD_LEVEL_DEBUG, "CURL found errors");
 			      //fprintf(stderr, "curl_easy_perform() failed: %s\n",
 			      //        curl_easy_strerror(res));
 
@@ -1822,7 +1754,7 @@ ieee802_1x_receive_auth(struct radius_msg *msg, struct radius_msg *req,
 
 			curl_global_cleanup();
 
-			 //END of CURL logic
+			//END of CURL logic
 
 			hostapd_logger(hapd, sta->addr,
 							HOSTAPD_MODULE_RADIUS,
