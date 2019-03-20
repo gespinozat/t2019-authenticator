@@ -1,1 +1,5 @@
-Repository for hostapd
+Makefile_hostapd:
+
+Makefile to compile hostapd in Chaos Calmer 15.05.1
+
+Found in chaos_calmer-15.05.1\package\network\services\hostapd
